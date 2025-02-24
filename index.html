@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Basement+Grotesque:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('website1.png') no-repeat center center/cover;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Basement Grotesque', sans-serif;
+        }
+        .countdown-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        svg {
+            transform: rotate(-90deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        circle {
+            transition: stroke-dashoffset 1s linear;
+        }
+        .countdown-text {
+            font-size: 10vw;
+            font-weight: bold;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            gap: 15px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown-text" id="countdown">Loading...</div>
+    </div>
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date(now.getFullYear(), 3, 30, 23, 59, 59); // End of April (April 30, 23:59:59)
+            const totalTime = end - new Date(now.getFullYear(), 0, 1); // Total time from Jan 1st to April 30th
+            const remainingTime = end - now;
+            
+            if (remainingTime <= 0) {
+                document.getElementById('countdown').textContent = "Time's Up!";
+                return;
+            }
+            
+            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
